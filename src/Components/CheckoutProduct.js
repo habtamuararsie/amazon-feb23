@@ -1,8 +1,8 @@
 import React from "react";
 import "./CheckoutProduct.css";
-import { useStateValue } from "./StateProvider";
+import { useStateValue } from "../Pages/StateProvider";
 
-function CheckoutProduct({id, image, title, price, rating}) {
+function CheckoutProduct({ id, image, title, price, rating, hideButton }) {
   const [{ basket }, dispatch] = useStateValue();
 
   const removeFromBasket = () => {
@@ -11,6 +11,7 @@ function CheckoutProduct({id, image, title, price, rating}) {
       id: id,
     });
   };
+  const validRating = Number.isInteger(rating) && rating > 0;
   return (
     <div className="checkoutProduct">
       <img className="checkoutProduct__image" src={image} />
@@ -29,7 +30,9 @@ function CheckoutProduct({id, image, title, price, rating}) {
               <p>🌟</p>
             ))}
         </div>
-       <button onClick={removeFromBasket}>Reomve From Basket</button>
+        {!hideButton && (
+          <button onClick={removeFromBasket}>Reomve From Basket</button>
+        )}
       </div>
     </div>
   );
